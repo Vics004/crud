@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${producto.id} ? 'Editar Producto' : 'Nuevo Producto'"></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 th:text="${producto.id} ? 'Editar Producto' : 'Nuevo Producto'"></h1>
+            <div>
+                <span class="me-3">
+                    Usuario: <strong th:text="${nombre}"></strong>
+                    (<span th:text="${isAdmin ? 'Administrador' : 'Usuario'}"></span>)
+                </span>
+                <a th:href="@{/logout}" class="btn btn-outline-secondary">Cerrar Sesión</a>
+            </div>
+        </div>
+         
+        <form th:action="@{/productos/save}" th:object="${producto}" method="post">
+            <input type="hidden" th:field="*{id}">
+             
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" th:field="*{nombre}" required>
+                <small class="error-message" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+            </div>
+             
+            <div class="mb-3">
+                <label class="form-label">Precio</label>
+                <input type="number" step="0.01" min="0" class="form-control" th:field="*{precio}" required>
+                <small class="error-message" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></small>
+            </div>
+             
+            <div class="mb-3">
+                <label class="form-label">Cantidad</label>
+                <input type="number" min="0" class="form-control" th:field="*{cantidad}" required>
+                <small class="error-message" th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></small>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">Categoría</label>
+                <select class="form-select" th:field="*{categoria}">
+                    <option value="">-- Seleccione una categoría --</option>
+                    <option th:each="categoria : ${categorias}"
+                            th:value="${categoria.id}"
+                            th:text="${categoria.nombre}"
+                            th:selected="${producto.categoria != null && producto.categoria.id == categoria.id}">
+                    </option>
+                </select>
+            </div>
+             
+            <div class="d-flex justify-content-between">
+                <div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <a th:href="@{/productos}" class="btn btn-secondary ms-2">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
