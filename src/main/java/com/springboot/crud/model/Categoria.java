@@ -1,4 +1,3 @@
-// Categoria.java
 package com.springboot.crud.model;
 
 import jakarta.persistence.*;

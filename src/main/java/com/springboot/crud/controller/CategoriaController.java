@@ -1,4 +1,3 @@
-// CategoriaController.java
 package com.springboot.crud.controller;
 
 import com.springboot.crud.model.Categoria;

@@ -1,4 +1,3 @@
-// CategoriaService.java
 package com.springboot.crud.service;
 
 import com.springboot.crud.model.Categoria;
